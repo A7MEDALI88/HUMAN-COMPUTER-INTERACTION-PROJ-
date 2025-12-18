@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="img/logo2.jpg" rel="shortcut icon"/>
+
+    <title> Learning Numbers Game </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffd166;
+            --light-color: #f7fff7;
+            --dark-color: #1a535c;
+        }
+        
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #e0f7fa;
+            color: var(--dark-color);
+            min-height: 100vh;
+            padding-bottom: 20px;
+            
+        }
+        
+        .game-title {
+            font-family: 'Comic Neue', cursive;
+            color: var(--primary-color);
+            text-shadow: 3px 3px 0 var(--accent-color);
+            font-size: 3.5rem;
+            margin-bottom: 0;
+        }
+        
+        .game-container {
+            margin: 0 auto;
+            padding: 20px;
+            display: block;
+            justify-content: center;
+
+        }
+        
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            margin-right: 200px;
+        }
+        
+        .level-selector {
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            width: 600px;
+        }
+        
+        .level-btn {
+            font-size: 1.5rem;
+            padding: 15px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .level-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .level-1 { background-color: #ffcccb; color: #c62828; }
+        .level-2 { background-color: #c8e6c9; color: #2e7d32; }
+        .level-3 { background-color: #bbdefb; color: #1565c0; }
+        .level-4 { background-color: #fff9c4; color: #f9a825; }
+        
+        .game-board {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 600px;
+            margin-left: 165px;
+        }
+        
+        .number-display {
+            font-size: 8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 5px 5px 0 var(--accent-color);
+            margin: 20px 0;
+            font-family: 'Comic Neue', cursive;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .counter-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 20px;
+        }
+        
+        .counter-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--secondary-color);
+            color: white;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .counter-btn:hover {
+            background-color: #3db8af;
+            transform: scale(1.1);
+        }
+        
+        .counter-value {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--dark-color);
+            min-width: 100px;
+            text-align: center;
+        }
+        .game-board p{
+            display: flex;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .option-btn {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Comic Neue', cursive;
+            align-items: center;
+            font-size: 20px;
+        }
+        
+        .option-btn:hover {
+            transform: scale(1.1);
+            background-color: #ffc145;
+        }
+        
+        .game-feedback {
+            font-size: 1.8rem;
+            text-align: center;
+            min-height: 60px;
+            margin: 20px 0;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .correct {
+            color: #4CAF50;
+        }
+        
+        .incorrect {
+            color: #F44336;
+        }
+        
+        .stats-panel {
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+           
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px dashed #ddd;
+            font-size: 1.2rem;
+            align-items: center;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .game-instructions {
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            align-items: center;
+            width: 600px;
+        }
+        
+        .game-instructions p {
+            align-items: center;
+            font-size: 40px;
+        }
+        
+        .instruction-title {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-family: 'Comic Neue', cursive;
+            align-items: center;
+        }
+        
+        .animal-img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin: 10px;
+        }
+        
+        .star {
+            color: gold;
+            font-size: 1.8rem;
+            margin: 0 2px;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        #next-btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left:100px ;
+        }
+        
+        .progress-bar {
+            height: 25px;
+            border-radius: 12px;
+            background-color: #e0e0e0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--secondary-color);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .number-animation {
+            animation: bounce 0.5s ease infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-20px); }
+        }
+        
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 215, 102, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .celebration h1 {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2.5rem;
+            }
+            
+            .number-display {
+                font-size: 6rem;
+            }
+            
+            .option-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+            
+            .counter-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            
+            .counter-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-section">
+		<div class="container">
+			<!-- logo -->
+			<!-- <a class="site-logo" href="index.html">
+				<img src="" height="50px" width="100px" alt="">
+			</a> -->
+			
+			<div class="user-panel">
+				<a href="#">Login</a>  /  <a href="#">Register</a>
+			</div>
+			<!-- responsive -->
+			<div class="nav-switch">
+				<i class="fa fa-bars"></i>
+			</div>
+			<!-- site menu -->
+			<nav class="main-menu">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="review.html">Games</a></li>
+					
+				</ul>
+			</nav>
+		</div>
+	</header>
+    <div class="main">
+    <div class="container-fluid game-container">
+        
+        
+        <!-- Game Area -->
+        <div class="row game-area">
+            <!-- Level Selector -->
+            <div class="col-lg-3 col-md-4">
+                <div class="level-selector">
+                    <h3 class="instruction-title"><i class="fas fa-gamepad me-2"></i>Choose Your Level</h3>
+                    <div class="d-grid gap-3">
+                        <button class="btn level-btn level-1" data-level="1">
+                            <i class="fas fa-star me-2"></i>Level 1: Number Recognition (1-10)
+                        </button>
+                        <button class="btn level-btn level-2" data-level="2">
+                            <i class="fas fa-star me-2"></i>Level 2: Counting (1-20)
+                        </button>
+                        <button class="btn level-btn level-3" data-level="3">
+                            <i class="fas fa-star me-2"></i>Level 3: Match Numbers (1-50)
+                        </button>
+                        <button class="btn level-btn level-4" data-level="4">
+                            <i class="fas fa-star me-2"></i>Level 4: Simple Math (Add/Subtract)
+                        </button>
+                    </div>
+                    
+                    <!-- Stats Panel -->
+                    <div class="stats-panel mt-4">
+                        <h3 class="instruction-title"><i class="fas fa-chart-line me-2"></i>Your Progress</h3>
+                        <div class="stat-item">
+                            <span>Current Level:</span>
+                            <span class="stat-value" id="current-level">1</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Correct Answers:</span>
+                            <span class="stat-value" id="correct-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Questions Answered:</span>
+                            <span class="stat-value" id="total-questions">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Accuracy:</span>
+                            <span class="stat-value" id="accuracy">0%</span>
+                        </div>
+                        <div class="progress-container mt-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Level Progress</span>
+                                <span id="progress-percent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Game Board -->
+            <div class="col-lg-6 col-md-8">
+                <div class="game-board">
+                    <!-- Current Game Display -->
+                    <div id="game-display">
+                        <h3 class="instruction-title" id="game-instruction">Click a level to start playing!</h3>
+                        
+                        <!-- Level 1: Number Recognition -->
+                        <div id="level-1-game" class="d-none">
+                            <div class="number-display number-animation" id="number-to-identify">5</div>
+                            <p class="game-instruction">What number is this?</p>
+                            <div class="options-container" id="number-options"></div>
+                        </div>
+                        
+                        <!-- Level 2: Counting -->
+                        <div id="level-2-game" class="d-none">
+                            <h4 class="instruction-title">Count the animals!</h4>
+                            <div id="animal-container" class="d-flex flex-wrap justify-content-center my-4"></div>
+                            <p class="game-instruction" style="align-items: center; font-size: 40px;">How many animals do you see?</p>
+                            <div class="options-container" id="counting-options"></div>
+                        </div>
+                        
+                        <!-- Level 3: Match Numbers -->
+                        <div id="level-3-game" class="d-none">
+                            <h4 class="instruction-title">Match the number with its name!</h4>
+                            <div class="number-display my-4" id="number-to-match">15</div>
+                            <p class="game-instruction">Which option matches this number?</p>
+                            <div class="options-container" id="matching-options"></div>
+                        </div>
+                        
+                        <!-- Level 4: Simple Math -->
+                        <div id="level-4-game" class="d-none">
+                            <h4 class="instruction-title">Solve the math problem!</h4>
+                            <div class="number-display my-4" id="math-problem">3 + 2</div>
+                            <p class="game-instruction">What is the answer?</p>
+                            <div class="options-container" id="math-options"></div>
+                        </div>
+                        
+                        <!-- Counter for all levels -->
+                        <div class="counter-container d-none" id="counter-area">
+                            <button class="counter-btn" id="decrease-btn"><i class="fas fa-minus"></i></button>
+                            <div class="counter-value" id="counter-value">1</div>
+                            <button class="counter-btn" id="increase-btn"><i class="fas fa-plus"></i></button>
+                        </div>
+                        
+                        <!-- Feedback Area -->
+                        <div class="game-feedback" id="feedback-area"></div>
+                        
+                        <!-- Next Button -->
+                        <button class="btn btn-success btn-lg d-none" id="next-btn">
+                            Next Question <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Instructions Panel -->
+            <div class="col-lg-3">
+                <div class="game-instructions">
+                    <h3 class="instruction-title"><i class="fas fa-info-circle me-2"></i>How to Play</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-mouse-pointer me-2 text-primary"></i>
+                            <strong>Select a level</strong> based on your learning stage
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-brain me-2 text-primary"></i>
+                            <strong>Solve the problem</strong> by clicking the correct answer
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-thumbs-up me-2 text-primary"></i>
+                            <strong>Get feedback</strong> and learn from mistakes
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-trophy me-2 text-primary"></i>
+                            <strong>Track your progress</strong> with the stats panel
+                        </li>
+                    </ul>
+                    
+                    <h4 class="instruction-title mt-4"><i class="fas fa-graduation-cap me-2"></i>Learning Benefits</h4>
+                    <div class="alert alert-info">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Number Recognition:</strong> Identify numbers 1-100
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Counting Skills:</strong> Count objects up to 20
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Basic Math:</strong> Simple addition and subtraction
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <button class="btn btn-warning btn-lg" id="reset-btn">
+                            <i class="fas fa-redo me-2"></i>Reset Game
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <!-- Celebration Modal -->
+    <div id="celebration" class="celebration d-none">
+        <h1>Level Complete! <i class="fas fa-trophy"></i></h1>
+        <div class="display-1 mb-4">
+            <i class="fas fa-star star"></i>
+            <i class="fas fa-star star"></i>
+            <i class="fas fa-star star"></i>
+        </div>
+        <p class="h3">You're doing great! Ready for the next level?</p>
+        <button class="btn btn-primary btn-lg mt-4" id="continue-btn">
+            Continue Learning! <i class="fas fa-arrow-right ms-2"></i>
+        </button>
+    </div>
+    </div>
+    <footer class="footer-section">
+		<div class="container">
+			<ul class="footer-menu">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="review.html">Games</a></li>
+			</ul>
+			<p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">ENGINEER AHMED ALI</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
+		</div>
+	</footer>
+
+    <!-- Sound effects -->
+    <audio id="correct-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" preload="auto"></audio>
+    <audio id="incorrect-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" preload="auto"></audio>
+    <audio id="celebration-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" preload="auto"></audio>
+
+    <script>
+        // Game state
+        const gameState = {
+            currentLevel: 1,
+            correctAnswers: 0,
+            totalQuestions: 0,
+            currentQuestion: {},
+            levelProgress: 0,
+            questionsPerLevel: 5
+        };
+        
+        // DOM elements
+        const levelButtons = document.querySelectorAll('.level-btn');
+        const gameDisplay = document.getElementById('game-display');
+        const feedbackArea = document.getElementById('feedback-area');
+        const nextBtn = document.getElementById('next-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const celebration = document.getElementById('celebration');
+        const continueBtn = document.getElementById('continue-btn');
+        
+        // Stats elements
+        const currentLevelElem = document.getElementById('current-level');
+        const correctCountElem = document.getElementById('correct-count');
+        const totalQuestionsElem = document.getElementById('total-questions');
+        const accuracyElem = document.getElementById('accuracy');
+        const progressFill = document.getElementById('progress-fill');
+        const progressPercent = document.getElementById('progress-percent');
+        
+        // Sound elements
+        const correctSound = document.getElementById('correct-sound');
+        const incorrectSound = document.getElementById('incorrect-sound');
+        const celebrationSound = document.getElementById('celebration-sound');
+        
+        // Animal images for counting level
+        const animalImages = [
+            '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯',
+            '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦', '🐤', '🦆'
+        ];
+        
+        // Number names for matching level
+        const numberNames = [
+            'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+            'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty',
+            'twenty-one', 'twenty-two', 'twenty-three', 'twenty-four', 'twenty-five', 'twenty-six', 'twenty-seven', 'twenty-eight', 'twenty-nine', 'thirty'
+        ];
+        
+        // Initialize the game
+        function initGame() {
+            // Add event listeners to level buttons
+            levelButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const level = parseInt(btn.getAttribute('data-level'));
+                    startLevel(level);
+                });
+            });
+            
+            // Add event listener to next button
+            nextBtn.addEventListener('click', generateQuestion);
+            
+            // Add event listener to reset button
+            resetBtn.addEventListener('click', resetGame);
+            
+            // Add event listener to continue button
+            continueBtn.addEventListener('click', () => {
+                celebration.classList.add('d-none');
+                startLevel(gameState.currentLevel + 1);
+            });
+            
+            // Start with level 1
+            startLevel(1);
+        }
+        
+        // Start a specific level
+        function startLevel(level) {
+            gameState.currentLevel = level;
+            gameState.levelProgress = 0;
+            updateStats();
+            
+            // Hide all game levels
+            document.querySelectorAll('[id$="game"]').forEach(el => {
+                el.classList.add('d-none');
+            });
+            
+            // Show the appropriate game level
+            document.getElementById(`level-${level}-game`).classList.remove('d-none');
+            
+            // Update instruction text
+            const instruction = document.getElementById('game-instruction');
+            switch(level) {
+                case 1:
+                    instruction.textContent = "Click on the correct number!";
+                    break;
+                case 2:
+                    instruction.textContent = "Count the animals and select the right number!";
+                    break;
+                case 3:
+                    instruction.textContent = "Match the number with its written name!";
+                    break;
+                case 4:
+                    instruction.textContent = "Solve the simple addition or subtraction!";
+                    break;
+            }
+            
+            // Generate first question
+            generateQuestion();
+        }
+        
+        // Generate a new question based on current level
+        function generateQuestion() {
+            // Reset UI
+            feedbackArea.textContent = "";
+            feedbackArea.className = "game-feedback";
+            nextBtn.classList.add('d-none');
+            
+            // Hide counter for all levels except counting
+            document.getElementById('counter-area').classList.add('d-none');
+            
+            // Generate question based on level
+            switch(gameState.currentLevel) {
+                case 1:
+                    generateNumberRecognitionQuestion();
+                    break;
+                case 2:
+                    generateCountingQuestion();
+                    break;
+                case 3:
+                    generateMatchingQuestion();
+                    break;
+                case 4:
+                    generateMathQuestion();
+                    break;
+            }
+            
+            // Update stats
+            gameState.totalQuestions++;
+            updateStats();
+        }
+        
+        // Level 1: Number Recognition
+        function generateNumberRecognitionQuestion() {
+            const targetNumber = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('number-to-identify').textContent = targetNumber;
+            
+            // Generate options (one correct, three incorrect)
+            const optionsContainer = document.getElementById('number-options');
+            optionsContainer.innerHTML = '';
+            
+            // Create correct option
+            const correctOption = document.createElement('button');
+            correctOption.className = 'option-btn';
+            correctOption.textContent = targetNumber;
+            correctOption.addEventListener('click', () => checkAnswer(targetNumber, targetNumber));
+            optionsContainer.appendChild(correctOption);
+            
+            // Create incorrect options (different numbers)
+            const usedNumbers = new Set([targetNumber]);
+            while (usedNumbers.size < 4) {
+                let wrongNumber;
+                do {
+                    wrongNumber = Math.floor(Math.random() * 10) + 1;
+                } while (usedNumbers.has(wrongNumber));
+                
+                usedNumbers.add(wrongNumber);
+                
+                const wrongOption = document.createElement('button');
+                wrongOption.className = 'option-btn';
+                wrongOption.textContent = wrongNumber;
+                wrongOption.addEventListener('click', () => checkAnswer(wrongNumber, targetNumber));
+                optionsContainer.appendChild(wrongOption);
+            }
+            
+            // Shuffle the options
+            for (let i = optionsContainer.children.length; i >= 0; i--) {
+                optionsContainer.appendChild(optionsContainer.children[Math.random() * i | 0]);
+            }
+            
+            // Store correct answer
+            gameState.currentQuestion = { correctAnswer: targetNumber };
+        }
+        
+        // Level 2: Counting
+        function generateCountingQuestion() {
+            const targetNumber = Math.floor(Math.random() * 10) + 1;
+            
+            // Display animals to count
+            const animalContainer = document.getElementById('animal-container');
+            animalContainer.innerHTML = '';
+            
+            for (let i = 0; i < targetNumber; i++) {
+                const animalImg = document.createElement('div');
+                animalImg.className = 'animal-img display-1';
+                animalImg.textContent = animalImages[Math.floor(Math.random() * animalImages.length)];
+                animalContainer.appendChild(animalImg);
+            }
+            
+            // Generate options (one correct, three incorrect)
+            const optionsContainer = document.getElementById('counting-options');
+            optionsContainer.innerHTML = '';
+            
+            // Create correct option
+            const correctOption = document.createElement('button');
+            correctOption.className = 'option-btn';
+            correctOption.textContent = targetNumber;
+            correctOption.addEventListener('click', () => checkAnswer(targetNumber, targetNumber));
+            optionsContainer.appendChild(correctOption);
+            
+            // Create incorrect options (numbers close to correct)
+            const usedNumbers = new Set([targetNumber]);
+            while (usedNumbers.size < 4) {
+                let wrongNumber;
+                do {
+                    // Generate numbers within +/- 3 of correct answer
+                    const offset = Math.floor(Math.random() * 5) - 2;
+                    wrongNumber = targetNumber + offset;
+                    if (wrongNumber < 1) wrongNumber = 1;
+                    if (wrongNumber > 10) wrongNumber = 10;
+                } while (usedNumbers.has(wrongNumber));
+                
+                usedNumbers.add(wrongNumber);
+                
+                const wrongOption = document.createElement('button');
+                wrongOption.className = 'option-btn';
+                wrongOption.textContent = wrongNumber;
+                wrongOption.addEventListener('click', () => checkAnswer(wrongNumber, targetNumber));
+                optionsContainer.appendChild(wrongOption);
+            }
+            
+            // Shuffle the options
+            for (let i = optionsContainer.children.length; i >= 0; i--) {
+                optionsContainer.appendChild(optionsContainer.children[Math.random() * i | 0]);
+            }
+            
+            // Store correct answer
+            gameState.currentQuestion = { correctAnswer: targetNumber };
+        }
+        
+        // Level 3: Match Numbers
+        function generateMatchingQuestion() {
+            const targetNumber = Math.floor(Math.random() * 30) + 1;
+            document.getElementById('number-to-match').textContent = targetNumber;
+            
+            // Generate options (one correct name, three incorrect names)
+            const optionsContainer = document.getElementById('matching-options');
+            optionsContainer.innerHTML = '';
+            
+            // Create correct option
+            const correctOption = document.createElement('button');
+            correctOption.className = 'option-btn';
+            correctOption.textContent = numberNames[targetNumber - 1];
+            correctOption.addEventListener('click', () => checkAnswer(numberNames[targetNumber - 1], numberNames[targetNumber - 1]));
+            optionsContainer.appendChild(correctOption);
+            
+            // Create incorrect options (different number names)
+            const usedNames = new Set([numberNames[targetNumber - 1]]);
+            while (usedNames.size < 4) {
+                let wrongNumber;
+                do {
+                    wrongNumber = Math.floor(Math.random() * 30) + 1;
+                } while (usedNames.has(numberNames[wrongNumber - 1]));
+                
+                usedNames.add(numberNames[wrongNumber - 1]);
+                
+                const wrongOption = document.createElement('button');
+                wrongOption.className = 'option-btn';
+                wrongOption.textContent = numberNames[wrongNumber - 1];
+                wrongOption.addEventListener('click', () => checkAnswer(numberNames[wrongNumber - 1], numberNames[targetNumber - 1]));
+                optionsContainer.appendChild(wrongOption);
+            }
+            
+            // Shuffle the options
+            for (let i = optionsContainer.children.length; i >= 0; i--) {
+                optionsContainer.appendChild(optionsContainer.children[Math.random() * i | 0]);
+            }
+            
+            // Store correct answer
+            gameState.currentQuestion = { correctAnswer: numberNames[targetNumber - 1] };
+        }
+        
+        // Level 4: Simple Math
+        function generateMathQuestion() {
+            let problem, correctAnswer;
+            const problemTypes = ['addition', 'subtraction'];
+            const problemType = problemTypes[Math.floor(Math.random() * problemTypes.length)];
+            
+            if (problemType === 'addition') {
+                const num1 = Math.floor(Math.random() * 10) + 1;
+                const num2 = Math.floor(Math.random() * 10) + 1;
+                problem = `${num1} + ${num2}`;
+                correctAnswer = num1 + num2;
+            } else {
+                const num1 = Math.floor(Math.random() * 10) + 1;
+                const num2 = Math.floor(Math.random() * num1) + 1;
+                problem = `${num1} - ${num2}`;
+                correctAnswer = num1 - num2;
+            }
+            
+            document.getElementById('math-problem').textContent = problem;
+            
+            // Generate options (one correct, three incorrect)
+            const optionsContainer = document.getElementById('math-options');
+            optionsContainer.innerHTML = '';
+            
+            // Create correct option
+            const correctOption = document.createElement('button');
+            correctOption.className = 'option-btn';
+            correctOption.textContent = correctAnswer;
+            correctOption.addEventListener('click', () => checkAnswer(correctAnswer, correctAnswer));
+            optionsContainer.appendChild(correctOption);
+            
+            // Create incorrect options (numbers close to correct answer)
+            const usedNumbers = new Set([correctAnswer]);
+            while (usedNumbers.size < 4) {
+                let wrongNumber;
+                do {
+                    // Generate numbers within +/- 3 of correct answer
+                    const offset = Math.floor(Math.random() * 5) - 2;
+                    wrongNumber = correctAnswer + offset;
+                    if (wrongNumber < 0) wrongNumber = 0;
+                } while (usedNumbers.has(wrongNumber));
+                
+                usedNumbers.add(wrongNumber);
+                
+                const wrongOption = document.createElement('button');
+                wrongOption.className = 'option-btn';
+                wrongOption.textContent = wrongNumber;
+                wrongOption.addEventListener('click', () => checkAnswer(wrongNumber, correctAnswer));
+                optionsContainer.appendChild(wrongOption);
+            }
+            
+            // Shuffle the options
+            for (let i = optionsContainer.children.length; i >= 0; i--) {
+                optionsContainer.appendChild(optionsContainer.children[Math.random() * i | 0]);
+            }
+            
+            // Store correct answer
+            gameState.currentQuestion = { correctAnswer };
+        }
+        
+        // Check the answer
+        function checkAnswer(selectedAnswer, correctAnswer) {
+            const isCorrect = selectedAnswer === correctAnswer;
+            
+            // Play sound
+            if (isCorrect) {
+                correctSound.currentTime = 0;
+                correctSound.play();
+                feedbackArea.textContent = "Great job! That's correct!";
+                feedbackArea.classList.add('correct');
+                gameState.correctAnswers++;
+                gameState.levelProgress++;
+            } else {
+                incorrectSound.currentTime = 0;
+                incorrectSound.play();
+                feedbackArea.textContent = `Oops! The correct answer is ${correctAnswer}. Try again!`;
+                feedbackArea.classList.add('incorrect');
+            }
+            
+            // Update stats
+            updateStats();
+            
+            // Show next button
+            nextBtn.classList.remove('d-none');
+            
+            // Check if level is complete
+            if (gameState.levelProgress >= gameState.questionsPerLevel) {
+                setTimeout(() => {
+                    celebrationSound.play();
+                    celebration.classList.remove('d-none');
+                }, 1000);
+            }
+        }
+        
+        // Update game statistics
+        function updateStats() {
+            currentLevelElem.textContent = gameState.currentLevel;
+            correctCountElem.textContent = gameState.correctAnswers;
+            totalQuestionsElem.textContent = gameState.totalQuestions;
+            
+            // Calculate accuracy
+            const accuracy = gameState.totalQuestions > 0 
+                ? Math.round((gameState.correctAnswers / gameState.totalQuestions) * 100) 
+                : 0;
+            accuracyElem.textContent = `${accuracy}%`;
+            
+            // Update progress
+            const progressPercentage = (gameState.levelProgress / gameState.questionsPerLevel) * 100;
+            progressFill.style.width = `${progressPercentage}%`;
+            progressPercent.textContent = `${Math.round(progressPercentage)}%`;
+        }
+        
+        // Reset the game
+        function resetGame() {
+            gameState.currentLevel = 1;
+            gameState.correctAnswers = 0;
+            gameState.totalQuestions = 0;
+            gameState.levelProgress = 0;
+            
+            updateStats();
+            startLevel(1);
+            celebration.classList.add('d-none');
+            
+            // Show confirmation
+            feedbackArea.textContent = "Game reset! Start learning from Level 1.";
+            feedbackArea.className = "game-feedback";
+            setTimeout(() => {
+                feedbackArea.textContent = "";
+            }, 2000);
+        }
+        
+        // Initialize the game when page loads
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ABC Kids Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/LettersGameStyle.css">
+  
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+
+	<link rel="stylesheet" href="css/style.css"/>
+  <link href="img/logo2.jpg" rel="shortcut icon"/>
+
+	
+
+</head>
+<body>
+  <div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="container">
+			<!-- logo -->
+			<!-- <a class="site-logo" href="index.html">
+				<img src="" height="50px" width="100px" alt="">
+			</a> -->
+			
+			<div class="user-panel">
+				<a href="#">Login</a>  /  <a href="#">Register</a>
+			</div>
+			<!-- responsive -->
+			<div class="nav-switch">
+				<i class="fa fa-bars"></i>
+			</div>
+			<!-- site menu -->
+			<nav class="main-menu">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="review.html">Games</a></li>
+					
+				</ul>
+			</nav>
+		</div>
+	</header>
+  <div class="thebody">
+  <div class="game-container">
+    <h5>Learn the Letters 🎈</h5>
+    <div class="letter-display" id="letter">A</div>
+    <div class="word-display">
+      <span id="word">Apple</span>
+      <img id="image" src="https://via.placeholder.com/120" alt="Apple" />
+    </div>
+
+    <div class="controls">
+      <button id="prevBtn">⬅ Previous</button>
+      <button id="soundBtn">🔊 Sound</button>
+      <button id="nextBtn">Next ➡</button>
+    </div>
+
+    <div class="progress" id="progress" style="padding: 10px; align-items: center; display: flex; justify-content: center; margin-top: 15px;
+    font-size: 14px;
+    color: #666;">Letter 1 of 26</div>
+  </div>
+  </div>
+
+  <script>
+   
+    const alphabet = [
+      { letter: 'A', word: 'Apple', image: 'https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg' },
+      { letter: 'B', word: 'Ball', image: 'https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png' },
+      { letter: 'C', word: 'Cat', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg' },
+      { letter: 'D', word: 'Dog', image: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg' },
+      { letter: 'E', word: 'Elephant', image: 'https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg' },
+      { letter: 'F', word: 'Fish', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Goldfish3.jpg' },
+      { letter: 'G', word: 'Grapes', image: 'https://upload.wikimedia.org/wikipedia/commons/b/bb/Table_grapes_on_white.jpg' },
+      { letter: 'H', word: 'Hat', image: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Baseball_cap.jpg' },
+      { letter: 'I', word: 'Ice Cream', image: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Ice_Cream_dessert_02.jpg' },
+      { letter: 'J', word: 'Juice', image: 'https://upload.wikimedia.org/wikipedia/commons/3/36/Orange_juice_1.jpg' },
+      { letter: 'K', word: 'Kite', image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Kite.arp.600pix.jpg' },
+      { letter: 'L', word: 'Lion', image: 'https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg' },
+      { letter: 'M', word: 'Moon', image: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg' },
+      { letter: 'N', word: 'Nest', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Bird_nest.jpg' },
+      { letter: 'O', word: 'Orange', image: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg' },
+      { letter: 'P', word: 'Pencil', image: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Pencils.jpg' },
+      { letter: 'Q', word: 'Queen', image: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Queen_Elizabeth_II_March_2015.jpg' },
+      { letter: 'R', word: 'Rabbit', image: 'https://upload.wikimedia.org/wikipedia/commons/7/7f/Rabbit_in_montana.jpg' },
+      { letter: 'S', word: 'Sun', image: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg' },
+      { letter: 'T', word: 'Tiger', image: 'https://upload.wikimedia.org/wikipedia/commons/5/56/Tiger.50.jpg' },
+      { letter: 'U', word: 'Umbrella', image: 'https://upload.wikimedia.org/wikipedia/commons/4/4e/Umbrella_%28PSF%29.png' },
+      { letter: 'V', word: 'Van', image: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/Van_parked.jpg' },
+      { letter: 'W', word: 'Whale', image: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Humpback_Whale_underwater_shot.jpg' },
+      { letter: 'X', word: 'Xylophone', image: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/Xylophone.jpg' },
+      { letter: 'Y', word: 'Yoyo', image: 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Yo-yo.jpg' },
+      { letter: 'Z', word: 'Zebra', image: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Zebra_Botswana_edit02.jpg' }
+    ];
+
+    let currentIndex = 0;
+
+    const letterEl = document.getElementById('letter');
+    const wordEl = document.getElementById('word');
+    const imageEl = document.getElementById('image');
+    const progressEl = document.getElementById('progress');
+
+    function updateUI() {
+      const current = alphabet[currentIndex];
+      letterEl.textContent = current.letter;
+      wordEl.textContent = current.word;
+      imageEl.src = current.image;
+      imageEl.alt = current.word;
+      progressEl.textContent = `Letter ${currentIndex + 1} of ${alphabet.length}`;
+    }
+
+    
+
+    function speakLetter() {
+  if (!window.speechSynthesis) return;
+
+  const text = `${alphabet[currentIndex].letter}. ${alphabet[currentIndex].word}`;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  utterance.rate = 0.9;
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+}
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % alphabet.length;
+      updateUI();
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + alphabet.length) % alphabet.length;
+      updateUI();
+    });
+
+    document.getElementById('soundBtn').addEventListener('click', speakLetter);
+
+    // Initial load
+    updateUI();
+    
+  </script>
+  <footer class="footer-section">
+		<div class="container">
+			<ul class="footer-menu">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="review.html">Games</a></li>
+			</ul>
+			<p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">ENGINEER AHMED ALI</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
+		</div>
+	</footer>
+	<!-- Footer section end -->
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.marquee.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
